@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>진료 시간 선택</title>
+  <style>
+    body {
+      background-color: #e6f5ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    button {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      font-size: 22px;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2b90d9;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1a6fa0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>진료를 어떻게 받으시겠어요?</h2>
+    <button onclick="location.href='step7.html'">오늘 진료 대기표 받기</button>
+    <button onclick="location.href='step7.html'">내일 진료 예약하기</button>
+    <button onclick="goHome()">처음으로 돌아가기</button>
+  </div>
+
+  <script>
+    function goHome() {
+      localStorage.clear();
+      location.href = 'snubh.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>예약 완료</title>
+  <style>
+    body {
+      background-color: #e6f5ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    h2 {
+      color: #2b90d9;
+      margin-bottom: 20px;
+    }
+    .qr {
+      margin: 20px 0;
+    }
+    img {
+      width: 180px;
+      height: 180px;
+    }
+    p {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    .home-btn {
+      margin-top: 30px;
+      font-size: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2b90d9;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>예약이 완료되었습니다 ✅</h2>
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=진료예약완료" alt="QR 코드">
+    </div>
+    <p>위 QR 코드를 데스크에 보여주세요.<br>또는 접수 번호 <strong>109번</strong>을 기억해 주세요.</p>
+    <button class="home-btn" onclick="goHome()">다음 환자 문진 시작하기</button>
+  </div>
+
+  <script>
+    const postData = {
+      name: localStorage.getItem("name") || "홍길동",
+      idNumber: localStorage.getItem("idNumber") || "900101-*******",
+      phone: localStorage.getItem("phone") || "01012345678",
+      symptoms: JSON.parse(localStorage.getItem("symptoms") || "[]"),
+      detail: localStorage.getItem("detail") || "상세 없음"
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbyz3eJm7S7W6F8824WYHD_2MZMSS7pNSthV1TtuoVJXyc-3Ke46309Cb-liC5iqCLQ3/exec", {
+      method: "POST",
+      body: JSON.stringify(postData),
+      headers: { "Content-Type": "application/json" }
+    }).then(response => response.text()).then(text => {
+      console.log("저장 결과:", text);
+    });
+
+    function goHome() {
+      localStorage.clear();
+      location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>증상 선택</title>
+  <style>
+    body {
+      background-color: #e6f5ff;
+      font-family: Arial, sans-serif;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .left, .right {
+      flex: 1;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      width: 100%;
+    }
+    .symptom-btn {
+      font-size: 18px;
+      padding: 10px 16px;
+      margin: 6px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2b90d9;
+      color: white;
+      cursor: pointer;
+    }
+    .symptom-btn:hover {
+      background-color: #1a6fa0;
+    }
+    .selected-symptoms {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 10px;
+      min-height: 200px;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #2b90d9;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin: 5px;
+      font-size: 16px;
+      position: relative;
+    }
+    .tag .remove {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 20px;
+      background-color: #2b90d9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>어디가 불편하신가요?</h2>
+    <div class="left">
+      <div id="symptom-list"></div>
+    </div>
+    <div class="right">
+      <h3>선택한 증상</h3>
+      <div id="selected" class="selected-symptoms"></div>
+      <button class="next-btn" onclick="location.href='step4.html'">다음</button>
+    </div>
+  </div>
+
+  <script>
+    const symptoms = ["기침", "두통", "복통", "발열", "구토", "콧물", "근육통", "메스꺼움", "설사", "피부 발진", "호흡곤란", "요통", "눈 통증", "가슴 통증", "피로감", "식욕부진", "오한", "현기증", "귀 통증", "인후통"];
+    const selected = new Set();
+
+    const listEl = document.getElementById("symptom-list");
+    const selectedEl = document.getElementById("selected");
+
+    function renderSymptoms() {
+      listEl.innerHTML = "";
+      symptoms.forEach(sym => {
+        const btn = document.createElement("button");
+        btn.className = "symptom-btn";
+        btn.textContent = sym;
+        btn.onclick = () => {
+          if (!selected.has(sym)) {
+            selected.add(sym);
+            renderSelected();
+          }
+        };
+        listEl.appendChild(btn);
+      });
+    }
+
+    function renderSelected() {
+      selectedEl.innerHTML = "";
+      selected.forEach(sym => {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = sym;
+
+        const remove = document.createElement("button");
+        remove.className = "remove";
+        remove.innerHTML = "×";
+        remove.onclick = () => {
+          selected.delete(sym);
+          renderSelected();
+        };
+
+        tag.appendChild(remove);
+        selectedEl.appendChild(tag);
+      });
+    }
+
+    renderSymptoms();
+  
+    window.addEventListener("beforeunload", () => {
+      localStorage.setItem("symptoms", JSON.stringify(Array.from(selected)));
+    });
+
+    window.addEventListener("load", () => {
+      const saved = JSON.parse(localStorage.getItem("symptoms") || "[]");
+      for (const sym of saved) {
+        selected.add(sym);
+      }
+      renderSelected();
+    });
+  </script>
+
+</body>
+</html>

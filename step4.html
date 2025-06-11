@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상세 증상 입력</title>
+  <style>
+    body {
+      background-color: #e6f5ff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+    input, select {
+      width: 80%;
+      padding: 10px;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 30px;
+      font-size: 22px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2b90d9;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>상세 증상을 입력해 주세요</h2>
+    <label for="duration">언제부터 증상이 있었나요?</label>
+    <input type="text" id="duration" placeholder="예: 3일 전부터">
+
+    <label for="severity">통증 정도는 어느 정도인가요? (1~10)</label>
+    <input type="number" id="severity" min="1" max="10" placeholder="예: 7">
+
+    <label for="additional">기타 증상이 있다면 입력해 주세요</label>
+    <input type="text" id="additional" placeholder="예: 발열, 어지러움 등">
+
+    </div>
+  <div style="text-align: center; margin-top: 30px;"><button onclick="saveAndNext()">다음</button></div>
+  </div>
+
+  <script>
+    function saveAndNext() {
+      const detail = 
+        "지속기간: " + document.getElementById("duration").value + ", " +
+        "통증강도: " + document.getElementById("severity").value + ", " +
+        "기타: " + document.getElementById("additional").value;
+
+      localStorage.setItem("detail", detail);
+      location.href = 'step5.html';
+    }
+  </script>
+</body>
+</html>
