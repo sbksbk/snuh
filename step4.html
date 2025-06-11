@@ -41,6 +41,185 @@
       cursor: pointer;
     }
   </style>
+
+<style>
+  .keypad { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; justify-items: center; }
+  .keypad button {
+    font-size: 24px;
+    padding: 15px;
+    width: 80px;
+    border-radius: 8px;
+    border: none;
+    background-color: #2b90d9;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+<script>
+  let activeInput = null;
+
+  function press(num) {
+    if (activeInput) {
+      activeInput.value += num;
+    }
+  }
+
+  function back() {
+    if (activeInput) {
+      activeInput.value = activeInput.value.slice(0, -1);
+    }
+  }
+
+  function clearInput() {
+    if (activeInput) {
+      activeInput.value = '';
+    }
+  }
+
+  function activateInput(id) {
+    activeInput = document.getElementById(id);
+  }
+</script>
+
+
+<style>
+  #floating-keypad {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 999;
+  }
+  #floating-keypad .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+  }
+  #floating-keypad button {
+    font-size: 24px;
+    padding: 15px;
+    width: 60px;
+    border-radius: 8px;
+    border: none;
+    background-color: #2b90d9;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+<script>
+  let activeInput = null;
+
+  function press(num) {
+    if (activeInput) {
+      activeInput.value += num;
+    }
+  }
+
+  function back() {
+    if (activeInput) {
+      activeInput.value = activeInput.value.slice(0, -1);
+    }
+  }
+
+  function clearInput() {
+    if (activeInput) {
+      activeInput.value = '';
+    }
+  }
+
+  function confirmInput() {
+    document.getElementById('floating-keypad').style.display = 'none';
+  }
+
+  function activateInput(id) {
+    activeInput = document.getElementById(id);
+    const keypad = document.getElementById('floating-keypad');
+    keypad.style.display = 'block';
+  }
+
+  // Hide keypad if clicked outside
+  document.addEventListener('click', function(event) {
+    const keypad = document.getElementById('floating-keypad');
+    if (!keypad.contains(event.target) && event.target.tagName !== "INPUT") {
+      keypad.style.display = 'none';
+    }
+  });
+</script>
+
+
+<style>
+  #fixed-keypad {
+    margin-top: 30px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    display: none;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #fixed-keypad .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+  }
+  #fixed-keypad button {
+    font-size: 24px;
+    padding: 15px;
+    width: 80px;
+    border-radius: 8px;
+    border: none;
+    background-color: #2b90d9;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+<script>
+  let activeInput = null;
+
+  function press(num) {
+    if (activeInput) {
+      activeInput.value += num;
+    }
+  }
+
+  function back() {
+    if (activeInput) {
+      activeInput.value = activeInput.value.slice(0, -1);
+    }
+  }
+
+  function clearInput() {
+    if (activeInput) {
+      activeInput.value = '';
+    }
+  }
+
+  function confirmInput() {
+    document.getElementById('fixed-keypad').style.display = 'none';
+  }
+
+  function activateInput(id) {
+    activeInput = document.getElementById(id);
+    document.getElementById('fixed-keypad').style.display = 'block';
+  }
+
+  document.addEventListener('click', function(event) {
+    const keypad = document.getElementById('fixed-keypad');
+    if (!keypad.contains(event.target) && event.target.tagName !== "INPUT") {
+      keypad.style.display = 'none';
+    }
+  });
+</script>
+
 </head>
 <body>
   <div class="container">
@@ -49,9 +228,25 @@
     <input type="text" id="duration" placeholder="예: 3일 전부터">
 
     <label for="severity">통증 정도는 어느 정도인가요? (1~10)</label>
-    <input type="number" id="severity" min="1" max="10" placeholder="예: 7">
+    <input id="severity" type="text" onclick="activateInput(\'severity\')" readonly>
 
-    <label for="additional">기타 증상이 있다면 입력해 주세요</label>
+    
+<div class="keypad">
+  <button onclick="press('1')">1</button>
+  <button onclick="press('2')">2</button>
+  <button onclick="press('3')">3</button>
+  <button onclick="press('4')">4</button>
+  <button onclick="press('5')">5</button>
+  <button onclick="press('6')">6</button>
+  <button onclick="press('7')">7</button>
+  <button onclick="press('8')">8</button>
+  <button onclick="press('9')">9</button>
+  <button onclick="clearInput()">C</button>
+  <button onclick="press('0')">0</button>
+  <button onclick="back()">←</button>
+</div>
+
+<label for="additional">기타 증상이 있다면 입력해 주세요</label>
     <input type="text" id="additional" placeholder="예: 발열, 어지러움 등">
 
     </div>
@@ -69,5 +264,43 @@
       location.href = 'step5.html';
     }
   </script>
+
+<div id="floating-keypad">
+  <div class="keypad">
+    <button onclick="press('1')">1</button>
+    <button onclick="press('2')">2</button>
+    <button onclick="press('3')">3</button>
+    <button onclick="press('4')">4</button>
+    <button onclick="press('5')">5</button>
+    <button onclick="press('6')">6</button>
+    <button onclick="press('7')">7</button>
+    <button onclick="press('8')">8</button>
+    <button onclick="press('9')">9</button>
+    <button onclick="clearInput()">C</button>
+    <button onclick="press('0')">0</button>
+    <button onclick="back()">←</button>
+    <button style="grid-column: span 3;" onclick="confirmInput()">✔</button>
+  </div>
+</div>
+
+
+<div id="fixed-keypad">
+  <div class="keypad">
+    <button onclick="press('1')">1</button>
+    <button onclick="press('2')">2</button>
+    <button onclick="press('3')">3</button>
+    <button onclick="press('4')">4</button>
+    <button onclick="press('5')">5</button>
+    <button onclick="press('6')">6</button>
+    <button onclick="press('7')">7</button>
+    <button onclick="press('8')">8</button>
+    <button onclick="press('9')">9</button>
+    <button onclick="clearInput()">C</button>
+    <button onclick="press('0')">0</button>
+    <button onclick="back()">←</button>
+    <button style="grid-column: span 3;" onclick="confirmInput()">✔</button>
+  </div>
+</div>
+
 </body>
 </html>
