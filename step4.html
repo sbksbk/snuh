@@ -41,46 +41,6 @@
       cursor: pointer;
     }
   </style>
-
-<style>
-  .keypad { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; justify-items: center; }
-  .keypad button {
-    font-size: 24px;
-    padding: 15px;
-    width: 80px;
-    border-radius: 8px;
-    border: none;
-    background-color: #2b90d9;
-    color: white;
-    cursor: pointer;
-  }
-</style>
-<script>
-  let activeInput = null;
-
-  function press(num) {
-    if (activeInput) {
-      activeInput.value += num;
-    }
-  }
-
-  function back() {
-    if (activeInput) {
-      activeInput.value = activeInput.value.slice(0, -1);
-    }
-  }
-
-  function clearInput() {
-    if (activeInput) {
-      activeInput.value = '';
-    }
-  }
-
-  function activateInput(id) {
-    activeInput = document.getElementById(id);
-  }
-</script>
-
 </head>
 <body>
   <div class="container">
@@ -89,25 +49,9 @@
     <input type="text" id="duration" placeholder="예: 3일 전부터">
 
     <label for="severity">통증 정도는 어느 정도인가요? (1~10)</label>
-    <input type="text" id="severity" placeholder="예: 7" onclick="activateInput(\'severity\')" readonly>
+    <input type="number" id="severity" min="1" max="10" placeholder="예: 7">
 
-    
-<div class="keypad">
-  <button onclick="press('1')">1</button>
-  <button onclick="press('2')">2</button>
-  <button onclick="press('3')">3</button>
-  <button onclick="press('4')">4</button>
-  <button onclick="press('5')">5</button>
-  <button onclick="press('6')">6</button>
-  <button onclick="press('7')">7</button>
-  <button onclick="press('8')">8</button>
-  <button onclick="press('9')">9</button>
-  <button onclick="clearInput()">C</button>
-  <button onclick="press('0')">0</button>
-  <button onclick="back()">←</button>
-</div>
-
-<label for="additional">기타 증상이 있다면 입력해 주세요</label>
+    <label for="additional">기타 증상이 있다면 입력해 주세요</label>
     <input type="text" id="additional" placeholder="예: 발열, 어지러움 등">
 
     </div>

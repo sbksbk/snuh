@@ -35,54 +35,14 @@
       cursor: pointer;
     }
   </style>
-
-<style>
-  .keypad { margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; justify-items: center; }
-  .keypad button {
-    font-size: 24px;
-    padding: 15px;
-    width: 80px;
-    border-radius: 8px;
-    border: none;
-    background-color: #2b90d9;
-    color: white;
-    cursor: pointer;
-  }
-</style>
-<script>
-  let activeInput = null;
-
-  function press(num) {
-    if (activeInput) {
-      activeInput.value += num;
-    }
-  }
-
-  function back() {
-    if (activeInput) {
-      activeInput.value = activeInput.value.slice(0, -1);
-    }
-  }
-
-  function clearInput() {
-    if (activeInput) {
-      activeInput.value = '';
-    }
-  }
-
-  function activateInput(id) {
-    activeInput = document.getElementById(id);
-  }
-</script>
-
 </head>
 <body>
   <div class="container">
     <h2>환자 정보 입력</h2>
     <p>아래 정보를 입력해 주세요</p>
     <input id="nameInput" type="text" value="홍길동" placeholder="이름 (예: 홍길동)"><br>
-    <input id="idInput" type="text" maxlength="6" placeholder="주민등록번호 앞 6자리 (예: 900101)" onclick="activateInput(\'idInput\')" readonly><br>
-    <input id="phoneInput" type="text" placeholder="전화번호 (예: 01012345678)" onclick="activateInput(\'phoneInput\')" readonly><br>
+    <input id="idInput" type="text" maxlength="6" placeholder="주민등록번호 앞 6자리 (예: 900101)"><br>
+    <input id="phoneInput" type="text" placeholder="전화번호 (예: 01012345678)"><br>
     <button onclick="saveAndNext()">다음</button>
   </div>
 
